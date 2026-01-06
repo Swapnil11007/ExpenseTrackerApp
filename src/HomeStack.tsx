@@ -15,13 +15,13 @@ export function HomeStack() {
     >
       <Stack.Screen name="Dashboard" component={HomeScreen} />
       <Stack.Screen name="Details" component={DetailsScreen} />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="ExpenseCreationScreen"
         component={ExpenseCreationScreen}
         options={{
           title: 'Add Expense',
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }

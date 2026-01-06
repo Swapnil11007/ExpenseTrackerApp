@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TotalExpense from './components/TotalExpense';
 import CategorywiseSpend from '../commonComponets/CategorywiseSpend';
@@ -10,10 +10,27 @@ import { setExpenseData } from '../redux/actions';
 import ExpenseCard from '../commonComponets/ExpenseCard';
 import RecentExpenses from './components/RecentExpenses';
 
-function HomeScreen() {
+function HomeScreen({ navigation }) {
   const expenseData = useSelector(getExpenseDataFromRedux);
   const dispatch = useDispatch();
-  console.log('expenseData   ', expenseData);
+  const isFirstRender = useRef(true);
+
+
+    useEffect(() => {
+    console.log('expenseData 11111',expenseData)
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    storeExpenseData(expenseData)
+      .then(msg => {
+        Alert.alert(msg);
+        // navigation.pop();
+      })
+      .catch(err => {
+        Alert.alert(err);
+      });
+  }, [expenseData]);
 
   useEffect(function () {
     const abc = async () => {
@@ -22,9 +39,9 @@ function HomeScreen() {
     };
     abc();
 
-    return () => {
-      storeExpenseData(expenseData);
-    };
+    // return () => {
+    //   storeExpenseData(expenseData);
+    // };
   }, []);
 
   return (

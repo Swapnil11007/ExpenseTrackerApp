@@ -1,34 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { CATEGORY_ICON } from '../constants';
+import { useNavigation } from '@react-navigation/native';
 
-const EXPENSE_CATEGORIES = {
-  FOOD: 'Food',
-  TRANSPOPRT: 'Transport',
-  SHOPPING: 'Shopping',
-  BILL: 'Bill',
-  OTHER: 'Other',
-};
-const CategoryIcons = {
-  [EXPENSE_CATEGORIES.FOOD]: 'food-outline',
-  [EXPENSE_CATEGORIES.TRANSPOPRT]: 'train-car',
-  [EXPENSE_CATEGORIES.SHOPPING]: 'shopping-outline',
-  [EXPENSE_CATEGORIES.BILL]: 'note-text-outline',
-  [EXPENSE_CATEGORIES.OTHER]: 'dots-horizontal',
-};
+
 
 function ExpenseCard({ expenseItem }: { expenseItem: any }) {
-  expenseItem = {
-    amount: 100,
-    discription: 'not clear',
-    category: 'Bill',
-    date: '10/11/2025',
-  };
+  const navigation = useNavigation();
   return (
-    <View style={styles.mainContainer}>
+    <Pressable
+     style={styles.mainContainer}
+       onPress={()=>navigation.navigate('ExpenseCreationScreen', {expenseItem, viewDetails: true})}
+     >
       <View style={styles.avtarContainer}>
         <Icon
-          name={CategoryIcons[expenseItem.category]}
+          name={CATEGORY_ICON[expenseItem.category]}
           color={'white'}
           size={38}
         />
@@ -38,12 +25,13 @@ function ExpenseCard({ expenseItem }: { expenseItem: any }) {
         <Text style={styles.discText}>{expenseItem.discription}</Text>
       </View>
       <Text style={styles.textStyle}>{expenseItem.date}</Text>
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
+    width: '100%',
     flexDirection: 'row',
     gap: 15,
     justifyContent: 'center',

@@ -1,4 +1,4 @@
-fontsize --> 18, 25
+fontsize --> 18, 25git init
     height: 58,
     backgroundColor: '#fd7b3eff',
     alignItems: 'center',

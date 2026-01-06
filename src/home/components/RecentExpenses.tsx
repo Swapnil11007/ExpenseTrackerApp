@@ -21,13 +21,12 @@ function RecentExpenses({ expenseData, onlyShowRecenttransactions = false }) {
           </Text>
         </View>
       )}
-      {expenseData.length !== 1 ? (
+      {expenseData.length !== 0 ? (
         expenseData.map((item, index) => (
           <ExpenseCard expenseItem={item} key={index} />
         ))
       ) : (
-        // <NoExpenseView size={150} showAddExpBtn={!onlyShowRecenttransactions} />
-        null
+        <NoExpenseView size={150} showAddExpBtn={!onlyShowRecenttransactions} />
       )}
     </View>
   );

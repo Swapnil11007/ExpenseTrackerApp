@@ -5,19 +5,19 @@ import AppButton from './AppButton';
 import { useNavigation } from '@react-navigation/native';
 
 function NoExpenseView({ size = 100, showAddExpBtn = false }) {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Icon name={'timer-cog-outline'} color={'orange'} size={size} />
       <Text style={styles.textStyle}>
         You have not added any expense till now.
       </Text>
-      {/* {showAddExpBtn && (
+      {showAddExpBtn && (
         <AppButton
           label="Add Expense"
           onPress={() => navigation.navigate('ExpenseCreationScreen')}
         />
-      )} */}
+      )}
     </View>
   );
 }

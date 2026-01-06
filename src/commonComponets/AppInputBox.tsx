@@ -9,6 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type InputTypeProps = {
+  value: string;
   type?: 'AmountInput' | 'Discription' | '';
   onChangeText: (text?: string) => void;
   label?: string;
@@ -22,6 +23,7 @@ const IconsArray = {
 };
 
 function AppInputBox({
+  value='',
   type = '',
   onChangeText,
   label = '',
@@ -36,6 +38,7 @@ function AppInputBox({
       <View style={[styles.container, focused && { borderColor: '#fd7b3eff' }]}>
         {type && <Icon name={IconsArray[type]} color={'black'} size={28} />}
         <TextInput
+        value={value}
           style={styles.inputText}
           keyboardType={keyboardType}
           selectionColor={'#000000ff'}

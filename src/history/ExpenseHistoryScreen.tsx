@@ -8,7 +8,7 @@ function ExpenseHistoryScreen() {
   const expenseData = useSelector(getExpenseDataFromRedux);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, !expenseData.length && styles.justifyCenter]}>
       <RecentExpenses expenseData={expenseData} />
     </View>
   );
@@ -19,9 +19,11 @@ const styles = StyleSheet.create({
     flex:1,
     margin: 15,
     gap: 10,
-    justifyContent:'center',
     alignItems:'center',
   },
+  justifyCenter:{
+    justifyContent:'center',
+  }
 });
 
 export default ExpenseHistoryScreen;
