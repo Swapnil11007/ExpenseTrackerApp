@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -11,16 +11,16 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function CatogarySelector({ selected, setSelected }) {
   return (
-    <View style={{ width: '100%', gap: 5 }}>
+    <View style={styles.mainContainer}>
       <Text style={styles.inputText}>Category</Text>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {Object.entries(EXPENSE_CATEGORIES).map((item, index) => (
           <TouchableOpacity
-            style={[
+            style={StyleSheet.flatten([
               styles.btnContainer,
               selected === item[1] && { borderColor: '#fd7b3eff' },
-            ]}
+            ])}
             key={index}
             onPress={() => {
               setSelected(item[1]);
@@ -32,10 +32,10 @@ function CatogarySelector({ selected, setSelected }) {
               size={40}
             />
             <Text
-              style={[
+              style={StyleSheet.flatten([
                 styles.btnText,
                 selected === item[1] && { color: '#fd7b3eff' },
-              ]}
+              ])}
             >
               {item[1]}
             </Text>
@@ -48,7 +48,8 @@ function CatogarySelector({ selected, setSelected }) {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    gap: 10,
+    width: '100%',
+    gap: 5,
   },
   btnContainer: {
     minWidth: 80,

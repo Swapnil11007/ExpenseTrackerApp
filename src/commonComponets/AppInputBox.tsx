@@ -23,7 +23,7 @@ const IconsArray = {
 };
 
 function AppInputBox({
-  value='',
+  value = '',
   type = '',
   onChangeText,
   label = '',
@@ -35,10 +35,15 @@ function AppInputBox({
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.btnText}>{label}</Text>
-      <View style={[styles.container, focused && { borderColor: '#fd7b3eff' }]}>
+      <View
+        style={StyleSheet.flatten([
+          styles.container,
+          focused && { borderColor: '#fd7b3eff' },
+        ])}
+      >
         {type && <Icon name={IconsArray[type]} color={'black'} size={28} />}
         <TextInput
-        value={value}
+          value={value}
           style={styles.inputText}
           keyboardType={keyboardType}
           selectionColor={'#000000ff'}
@@ -57,7 +62,6 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   container: {
-    //   width: '100%',
     flexDirection: 'row',
     height: 65,
     borderWidth: 1,

@@ -4,14 +4,9 @@ import DetailsScreen from './home/DetailsScreen';
 import ExpenseCreationScreen from './home/ExpenseCreationScreen';
 const Stack = createNativeStackNavigator();
 
-export function HomeStack() {
+export default function HomeStack() {
   return (
     <Stack.Navigator
-      screenOptions={
-        {
-          // headerShown: false,
-        }
-      }
     >
       <Stack.Screen name="Dashboard" component={HomeScreen} />
       <Stack.Screen name="Details" component={DetailsScreen} />

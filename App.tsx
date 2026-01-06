@@ -21,10 +21,11 @@ import {
 } from 'react-native-safe-area-context';
 import BottomNavigation from './src/BottomNavigation';
 import { Provider } from 'react-redux';
-import { store } from './src/redux/store';
+import { persistor, store } from './src/redux/store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ExpenseCreationScreen from './src/home/ExpenseCreationScreen';
 import { BottomTabBarHeightContext } from '@react-navigation/bottom-tabs';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <SafeAreaProvider>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         {/* <AppContent /> */}
@@ -65,6 +67,7 @@ function App() {
           </NavigationContainer>
         </SafeAreaView>
       </SafeAreaProvider>
+      </PersistGate>
     </Provider>
   );
 }

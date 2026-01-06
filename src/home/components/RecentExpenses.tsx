@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import ExpenseCard from '../../commonComponets/ExpenseCard';
 import NoExpenseView from '../../commonComponets/NoExpenseView';
 import { useNavigation } from '@react-navigation/native';
@@ -21,6 +21,7 @@ function RecentExpenses({ expenseData, onlyShowRecenttransactions = false }) {
           </Text>
         </View>
       )}
+      {/* TODO: Implement flatlist here */}
       {expenseData.length !== 0 ? (
         expenseData.map((item, index) => (
           <ExpenseCard expenseItem={item} key={index} />

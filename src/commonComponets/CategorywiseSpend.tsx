@@ -1,17 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useSelector } from 'react-redux';
+import { getExpenseDataFromRedux } from '../redux/reducers';
 
-const category = {
-  Food: 40,
-  Transport: 30,
-  Shopping: 20,
-  Bill: 10,
-  // Others: 1 // TODO: need to add this other cat also
-};
+const ColorArray = ['#f17768', '#6cc395', '#db71b293', '#61aed1',  '#ecb750'];
 
-const ColorArray = ['#f17768', '#6cc395', '#61aed1', '#ecb750'];
-function CategorywiseSpend() {
+function CategorywiseSpend({ totalExpense }: { totalExpense: number }) {
+  const expenseData = useSelector(getExpenseDataFromRedux);
+
+  const categorywiseSpend = expenseData.reduce((spendsObj, expenseItem) => {
+    console.log(spendsObj, expenseItem, expenseItem.category);
+    spendsObj[expenseItem.category] =
+      (spendsObj[expenseItem.category] || 0) + parseFloat(expenseItem.amount);
+    console.log(spendsObj);
+
+    return spendsObj;
+  }, {});
+
   return (
     <View style={styles.mainContaine}>
       <Text style={styles.titleText}>Categorywise Spends</Text>
@@ -21,43 +27,26 @@ function CategorywiseSpend() {
         end={{ x: 0.9, y: 0.9 }}
         style={{ height: 2, borderRadius: 5 }}
       />
-      <View
-        style={{
-          width: '100%',
-          flexDirection: 'row',
-          height: 40,
-          gap: 2,
-          borderRadius: 24,
-          overflow: 'hidden',
-        }}
-      >
-        {Object.entries(category).map((cat, index) => (
+      <View style={styles.barStyle}>
+        {Object.entries(categorywiseSpend).map((cat, index) => (
           <View
-            style={{ backgroundColor: ColorArray[index], flex: cat[1] / 100 }}
+            style={{
+              backgroundColor: ColorArray[index],
+              flex: cat[1] / totalExpense,
+            }}
             key={index}
           />
         ))}
-        {/* replace 100 by total */}
       </View>
       <View style={styles.spendBarStyle}>
-        {Object.entries(category).map((cat, index) => {
-          console.log(cat);
+        {Object.entries(categorywiseSpend).map((cat, index) => {
           return (
-            <View
-              key={index}
-              style={{
-                width: '100%',
-                flexDirection: 'row',
-                gap: 10,
-              }}
-            >
+            <View key={index} style={styles.row}>
               <View
-                style={{
-                  width: 25,
-                  height: 25,
-                  backgroundColor: ColorArray[index],
-                  borderRadius: 12,
-                }}
+                style={StyleSheet.flatten([
+                  styles.circleStyle,
+                  { backgroundColor: ColorArray[index] },
+                ])}
               />
               <Text style={styles.textStyle}>{cat[0]}</Text>
               <Text style={styles.textStyleSpend}>{cat[1]}</Text>
@@ -91,6 +80,24 @@ const styles = StyleSheet.create({
   textStyleSpend: {
     fontSize: 18,
     minWidth: '20%',
+  },
+  barStyle: {
+    width: '100%',
+    flexDirection: 'row',
+    height: 40,
+    gap: 2,
+    borderRadius: 24,
+    overflow: 'hidden',
+  },
+  row: {
+    width: '100%',
+    flexDirection: 'row',
+    gap: 10,
+  },
+  circleStyle: {
+    width: 25,
+    height: 25,
+    borderRadius: 12,
   },
 });
 

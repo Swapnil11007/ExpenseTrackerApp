@@ -59,26 +59,19 @@ function ExpenseCreationScreen({ navigation, route }) {
     }
     dispatch(viewDetails ? editExpense(dataClone) : addExpense(dataClone));
     navigation.pop();
-    // storeExpenseData(viewDetails ? expenseData : [dataClone, ...expenseData])
-    //   .then(msg => {
-    //     Alert.alert(msg);
-    //     navigation.pop();
-    //   })
-    //   .catch(err => {
-    //     Alert.alert(err);
-    //   });
   };
 
   const removeExpense = () => {
-    dispatch(deleteExpense(data.id));
-    // storeExpenseData(expenseData)
-    //   .then(msg => {
-    //     Alert.alert(msg);
-    //     navigation.pop();
-    //   })
-    //   .catch(err => {
-    //     Alert.alert(err);
-    //   });
+    Alert.alert('Remove Expense', 'This Expense will deleted permanety', [
+      { text: 'cancel' },
+      {
+        text: 'delete',
+        onPress: () => {
+          dispatch(deleteExpense(data.id));
+          navigation.pop();
+        },
+      },
+    ]);
   };
 
   return (

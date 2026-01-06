@@ -1,55 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TotalExpense from './components/TotalExpense';
 import CategorywiseSpend from '../commonComponets/CategorywiseSpend';
-import { getExpenseData, storeExpenseData } from '../storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExpenseDataFromRedux } from '../redux/reducers';
-import { setExpenseData } from '../redux/actions';
-import ExpenseCard from '../commonComponets/ExpenseCard';
 import RecentExpenses from './components/RecentExpenses';
 
 function HomeScreen({ navigation }) {
   const expenseData = useSelector(getExpenseDataFromRedux);
-  const dispatch = useDispatch();
-  const isFirstRender = useRef(true);
 
-
-    useEffect(() => {
-    console.log('expenseData 11111',expenseData)
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    storeExpenseData(expenseData)
-      .then(msg => {
-        Alert.alert(msg);
-        // navigation.pop();
-      })
-      .catch(err => {
-        Alert.alert(err);
-      });
-  }, [expenseData]);
-
-  useEffect(function () {
-    const abc = async () => {
-      const data = await getExpenseData();
-      dispatch(setExpenseData(data));
-    };
-    abc();
-
-    // return () => {
-    //   storeExpenseData(expenseData);
-    // };
-  }, []);
-
+  const totalExpense = expenseData.reduce(
+    (val, ele) => val + Number.parseFloat(ele.amount),
+    0,
+  );
   return (
     <ScrollView>
       <View style={styles.container}>
-        <TotalExpense />
-        <CategorywiseSpend />
-        <RecentExpenses expenseData={expenseData} onlyShowRecenttransactions />
+        <TotalExpense totalExpense={totalExpense} />
+        <CategorywiseSpend totalExpense={totalExpense} />
+        <RecentExpenses
+          expenseData={
+            expenseData.length > 10 ? expenseData.slice(0, 10) : expenseData
+          }
+          onlyShowRecenttransactions
+        />
       </View>
     </ScrollView>
   );

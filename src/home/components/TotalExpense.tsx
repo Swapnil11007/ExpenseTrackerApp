@@ -3,13 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import AppButton from '../../commonComponets/AppButton';
 import { useNavigation } from '@react-navigation/native';
 
-function TotalExpense() {
+function TotalExpense({ totalExpense }: { totalExpense: number }) {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.headingTextStyle}>Total Spends</Text>
-        <Text style={styles.totalSpendTextStyle}> ₹ 1000000000</Text>
+        <Text style={styles.totalSpendTextStyle}>{(totalExpense || 0).toFixed(2)}</Text>
       </View>
       <View style={styles.btnContainer}>
         <AppButton
